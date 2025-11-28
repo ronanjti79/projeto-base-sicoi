@@ -1,1 +1,133 @@
 @import url('./main-layout.css');
+
+/* ==========================================================================
+   ESTILOS DE SELEÇÃO DE MENU
+   ========================================================================== */
+
+/* Destaca o item do menu primário selecionado manualmente com um fundo semitransparente e texto em negrito */
+.manually-selected-primary-item {
+    background: color-mix(in srgb, var(--lumo-primary-color) 10%, transparent);
+    font-weight: bold;
+}
+
+/* Aplica o mesmo estilo de destaque para itens de menu que são apenas ícones */
+.manually-selected-icon-only-item {
+    background: color-mix(in srgb, var(--lumo-primary-color) 10%, transparent);
+    font-weight: bold;
+}
+
+/* ==========================================================================
+   ESTRUTURA GERAL DO APP LAYOUT (Vaadin)
+   ========================================================================== */
+
+/* Estiliza a área lateral (drawer/menu) com um gradiente suave e remove a borda direita padrão */
+vaadin-app-layout::part(drawer) {
+    background: linear-gradient(to top, color-mix(in srgb, var(--lumo-primary-color) 10%, transparent), transparent 80%);
+    border-right: transparent;
+}
+
+/* Define o tamanho base da fonte para toda a aplicação */
+:root {
+    font-size: 15px;
+}
+
+/* Garante que a página ocupe 100% da altura da janela e remove a barra de rolagem do navegador (comportamento de App) */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* Garante que o componente principal do Vaadin ocupe toda a altura disponível e não role externamente */
+vaadin-app-layout {
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Define a área de conteúdo principal como um container Flexbox vertical.
+   Isso é crucial para que o conteúdo interno gerencie sua própria rolagem sem criar barra de rolagem na janela inteira */
+vaadin-app-layout::part(content) {
+    height: 100%;
+    display: flex;
+    flex-direction: column; /* Organiza o conteúdo em coluna */
+    overflow: hidden;       /* Previne vazamento de conteúdo */
+}
+
+/* ==========================================================================
+   ESTILOS DO COMPONENTE PERSONALIZADO (CustomAvatarMenu)
+   ========================================================================== */
+
+/* Estilo base para itens de menu customizados (Avatar, perfil, etc) */
+.menu-item {
+    display: flex;
+    align-items: center;        /* Centraliza verticalmente ícone e texto */
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 12px;
+    text-decoration: none;
+    color: #272525;             /* Cor do texto padrão (cinza escuro) */
+    border-radius: var(--lumo-border-radius-m); /* Bordas arredondadas seguindo o tema Lumo */
+    cursor: pointer;
+    transition: background-color 0.2s; /* Suaviza a mudança de cor ao passar o mouse */
+}
+
+/* Efeito ao passar o mouse sobre o item do menu */
+.menu-item:hover {
+    background-color: var(--lumo-primary-color-10pct); /* Fundo com cor primária clara */
+    color: var(--lumo-primary-text-color);             /* Texto assume a cor primária */
+    text-decoration: none;
+}
+
+/* Garante que o ícone herde a cor do texto ao passar o mouse */
+.menu-item:hover .menu-icon {
+    color: inherit;
+}
+
+/* Efeito visual ao clicar no item (estado ativo) */
+.menu-item:active {
+    background-color: var(--lumo-primary-color-10pct);
+}
+
+/* Estilização do ícone dentro do item de menu */
+.menu-icon {
+    margin-right: 8px;  /* Espaçamento entre ícone e texto */
+    color: #7c7c7c;     /* Cor cinza padrão para ícones inativos */
+}
+
+/* Ícone muda de cor ao passar o mouse sobre ele especificamente */
+.menu-icon:hover {
+    color: inherit;
+}
+
+/* Estilização do texto do menu */
+.menu-label {
+    font-weight: bolder;    /* Texto mais grosso */
+    color: inherit;         /* Herda a cor do pai (.menu-item) */
+    text-align: left;
+    line-height: 1.2;
+}
+
+/* Ícone de seta (chevron) empurrado para a extrema direita do item */
+.chevron-icon {
+    margin-left: auto; /* O 'auto' empurra o elemento para o final do container flex */
+}
+
+/* Classe utilitária para forçar negrito */
+.label-bold {
+    font-weight: bold;
+}
+
+/* Classe utilitária para criar layouts flex com espaçamento (gap) pequeno */
+.layout-gap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Posicionamento absoluto para bolinhas de notificação (badges) sobre ícones */
+.badge-notification {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%); /* Centraliza o ponto exato no canto superior direito */
+}
